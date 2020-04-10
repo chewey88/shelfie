@@ -1,33 +1,48 @@
 import React, {Component} from 'react'
+// import axios from 'axios'
 
 class Form extends Component {
     constructor() {
         super()
         this.state = {
-            imgurl: "",
             name: "",
-            price: 0
+            price: 0,
+            imgurl: ""
         }
+        this.handleAddProduct = this.handleAddProduct.bind(this)
     }
 
-    handleChange(event){
-        this.setState({
-            imgurl: event.target.value,
-            name: event.target.value,
-            price: event.target.value
-        })
-    }
+    handleChange(event){}    
+    
 
-    handleAddProduct(product){
-        axios.post('/api/product')
+
+    handleAddProduct(){
+        const newProduct = {
+            name: this.state.name,
+            price: this.state.price,
+            imgurl: this.state.imgurl
+        }
+        this.props.addProduct(newProduct)
     }
 
     render(){
         return (
             <div className='form'>
-                <input className='image-input' onChange={this.handleChange}/>
-                <input className='product-input'  onChange={this.handleChange}/>
-                <input className='price-input' type='number' onChange={this.handleChange}/>
+                <input 
+                className='image-input'
+                value={this.state.imgurl} 
+                onChange={(e) => this.setState({imgurl: e.target.value})}
+                />
+                <input 
+                className='product-input'
+                value={this.state.name}
+                onChange={(e) => this.setState({name: e.target.value})}
+                />
+                <input 
+                className='price-input' type='number'
+                value={this.state.price} 
+                onChange={(e) => this.setState({price: e.target.value})}
+                />
                 <button
                 className='cancel-button'>
                 Cancel
